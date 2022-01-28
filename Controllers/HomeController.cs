@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using LoginReg.Models;
 
 namespace LoginReg.Controllers
@@ -20,6 +15,8 @@ namespace LoginReg.Controllers
 
         [HttpGet("dashboard")]
         public IActionResult Dashboard() {
+            string userEmail = HttpContext.Session.GetString("Email");
+            ViewBag.Email = userEmail;
             return View();
         }
 
@@ -27,6 +24,7 @@ namespace LoginReg.Controllers
         [HttpPost("users/create")]
         public IActionResult CreateUser(User newUser) {
             if (ModelState.IsValid) {
+                HttpContext.Session.SetString("Email", newUser.Email);
                 return RedirectToAction("Dashboard");
             }
             return View("Index");
@@ -35,6 +33,7 @@ namespace LoginReg.Controllers
         [HttpPost("users/login")]
         public IActionResult LoginUser(LoginUser user) {
             if (ModelState.IsValid) {
+                HttpContext.Session.SetString("Email", user.LoginEmail);
                 return RedirectToAction("Dashboard");
             }
             return View("Index");
