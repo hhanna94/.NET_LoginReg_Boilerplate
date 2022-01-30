@@ -23,7 +23,7 @@ namespace LoginReg
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddSession();
-            services.AddDbContext<DataContext>(p=>p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

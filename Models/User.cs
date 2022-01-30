@@ -1,10 +1,13 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LoginReg.Models
 
 {
     public class User
     {
+        [Key]
         public int Id {get;set;}
         
         [Required]
@@ -20,6 +23,7 @@ namespace LoginReg.Models
         [DataType(DataType.Password)]
         public string Password {get;set;}
 
+        [NotMapped]
         [Required]
         [Display(Name="Confirm Password")]
         [DataType(DataType.Password)]
@@ -29,6 +33,9 @@ namespace LoginReg.Models
         [Required]
         [EmailAddress]
         public string Email {get;set;}
+
+        public DateTime CreatedAt {get;set;} = DateTime.Now;
+        public DateTime UpdatedAt {get;set;} = DateTime.Now;
         
     }
 }
